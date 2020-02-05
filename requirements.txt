@@ -1,0 +1,7 @@
+flask
+flask_login
+pulp
+cerberus
+numpy
+python-dotenv
+openpyxl == 3.0.1
