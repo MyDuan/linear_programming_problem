@@ -59,6 +59,11 @@ def index():
     return show()
 
 
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
+
+
 if __name__ == '__main__':
     dotenv_path = join(dirname(__file__), '.env')
     load_dotenv(dotenv_path)
