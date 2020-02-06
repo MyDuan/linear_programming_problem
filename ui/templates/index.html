@@ -63,7 +63,7 @@
                                 <td class="y"><div><p>{{data[item]}}</p></div></td>
                                 <input type="hidden" value="{{data[item]}}" name="{{item}}">
                                 <td class="y"><div><input type="text" value="{{data[item.split('_')[-1]+'_cost']}}" name="{{item.split('_')[-1]+'_cost'}}"></div></td>
-                                {% for name in data['y_names'] %}
+                                {% for name in data['a_names'] %}
                                     <td class="y"><div><input type="text" value="{{data[item.split('_')[-1]+loop.index|string]}}" name="{{item.split('_')[-1]+loop.index|string}}"></div></td>
                                 {% endfor %}
                             </tr>
@@ -71,13 +71,13 @@
                     {% endfor %}
                     <tr>
                         <td class="astrict" colspan="2"><div><p>MAX</p></div></td>
-                        {% for item in data['y_names'] %}
+                        {% for item in data['a_names'] %}
                             <td class="astrict"><div><input type="text" value="{{data['max_' + loop.index|string]}}" name="{{'max_' + loop.index|string}}"></div></td>
                         {% endfor %}
                     </tr>
                     <tr>
                         <td class="astrict" colspan="2"><div><p>MIN</p></div></td>
-                        {% for item in data['y_names'] %}
+                        {% for item in data['a_names'] %}
                             <td class="astrict"><div><input type="text" value="{{data['min_' + loop.index|string]}}" name="{{'min_' + loop.index|string}}"></div></td>
                         {% endfor %}
                     </tr>
