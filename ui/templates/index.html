@@ -1,13 +1,106 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/index.css') }}">
 </head>
 <body>
-    <h3>Hello world!</h3>
+    <div class="message">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class=flashes>
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+    <h1>Linear Programming Problem</h1>
     <div class="logout">
         <a href="{{url_for('logout')}}">Logout</a>
+    </div>
+    <div class="clear">
+        <a href="{{url_for('clear')}}">Clear data in table</a>
+    </div>
+    <div class = "csv">
+        <form method="post" action="{{ url_for('upload_csv') }}" enctype="multipart/form-data">
+            <input type="file" id="upload_csv" name="upload_csv">
+            <input type="submit" value="upload csv">
+        </form>
+    </div>
+    <div>
+        <div class="div_form">
+        <form action="/" method="post">
+            <div class="cp_ipselect">
+                <select name="algorithm" class="cp_sl06" required>
+                    <option value="0" {% if data and data.algorithm =='0' %} selected="selected"{% endif %}>Linear Programming</option>
+                    <option value="1" {% if data and data.algorithm =='1' %} selected="selected"{% endif %}>Genetic Algorithm</option>
+                </select>
+                <span class="cp_sl06_highlight"></span>
+                <span class="cp_sl06_selectbar"></span>
+                <label class="cp_sl06_selectlabel">Algorithm</label>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                    <tr class="active">
+                        {% if data %}
+                            <th>X</th>
+                            <th>Unit</th>
+                            {% for item in data %}
+                                {% if ('_name' in item) and ('_name_' not in item) and ('names' not in item) %}
+                                    <th>{{data[item]}}</th>
+                                    <input type="hidden" value="{{data[item]}}" name="{{item}}">
+                                {% endif %}
+                            {% endfor %}
+                        {% endif %}
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                {% if data %}
+                    {% for item in data %}
+                        {% if ('x_name_' in item) %}
+                            <tr>
+                                <td class="y"><div><p>{{data[item]}}</p></div></td>
+                                <input type="hidden" value="{{data[item]}}" name="{{item}}">
+                                <td class="y"><div><input type="text" value="{{data[item.split('_')[-1]+'_cost']}}" name="{{item.split('_')[-1]+'_cost'}}"></div></td>
+                                {% for name in data['y_names'] %}
+                                    <td class="y"><div><input type="text" value="{{data[item.split('_')[-1]+loop.index|string]}}" name="{{item.split('_')[-1]+loop.index|string}}"></div></td>
+                                {% endfor %}
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                    <tr>
+                        <td class="astrict" colspan="2"><div><p>MAX</p></div></td>
+                        {% for item in data['y_names'] %}
+                            <td class="astrict"><div><input type="text" value="{{data['max_' + loop.index|string]}}" name="{{'max_' + loop.index|string}}"></div></td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <td class="astrict" colspan="2"><div><p>MIN</p></div></td>
+                        {% for item in data['y_names'] %}
+                            <td class="astrict"><div><input type="text" value="{{data['min_' + loop.index|string]}}" name="{{'min_' + loop.index|string}}"></div></td>
+                        {% endfor %}
+                    </tr>
+                {% endif %}
+                </tbody>
+            </table>
+            <div class = "input_wrap">
+                <input type="submit" value="Calculate">
+            </div>
+        </form>
+        </div>
+        <div class="results">
+            {% if results and data%}
+                <h3>Results:</h3>
+                {% for item in results %}
+                    {% if item == 'sum_cost' %}
+                        <h3>All Cost: {{results['sum_cost']}}</h3>
+                    {% else %}
+                        <p class="results_item">{{data['x_names'][loop.index - 1]}}: {{results[item]}}</p>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>

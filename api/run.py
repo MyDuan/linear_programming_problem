@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from os.path import join, dirname
 from flask import Flask, request, redirect, url_for, session, flash
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
+from werkzeug import secure_filename
 from application.index import *
 from models import *
 app = Flask(__name__, static_folder='../ui/static', template_folder='../ui/templates')
@@ -13,6 +14,22 @@ login_manager.login_view = 'login'
 login_manager.login_message_category = 'info'
 login_manager.login_message = 'Please login.'
 login_manager.init_app(app)
+
+UPLOAD_FOLDER = './uploads'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+
+@app.route('/upload_csv', methods=['POST'])
+def upload_csv():
+    if request.method == 'POST':
+        send_data = request.files['upload_csv']
+        if send_data:
+            filename = secure_filename(send_data.filename)
+            if filename:
+                send_data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+        else:
+            flash("アップロードファイルを選択してください。！", "failed")
+        return redirect(url_for('index'))
 
 
 @login_manager.user_loader
@@ -57,6 +74,13 @@ def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
     return show()
+
+
+@app.route('/clear', methods=['GET'])
+def clear():
+    session.pop('data', None)
+    session.pop('results', None)
+    return redirect(url_for('index'))
 
 
 @app.errorhandler(404)
