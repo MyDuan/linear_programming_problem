@@ -5,8 +5,12 @@ from os.path import join, dirname
 from flask import Flask, request, redirect, url_for, session, flash
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from werkzeug import secure_filename
-from application.index import *
 from models import *
+from application.index import *
+from algorithm import *
+from lib import *
+from validator import *
+
 app = Flask(__name__, static_folder='../ui/static', template_folder='../ui/templates')
 app.secret_key = 'linear_programming_problem'
 login_manager = LoginManager()
@@ -27,8 +31,10 @@ def upload_csv():
             filename = secure_filename(send_data.filename)
             if filename:
                 send_data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                data = get_data_from_file('uploads/' + filename)
+                session['data'] = data
         else:
-            flash("アップロードファイルを選択してください。！", "failed")
+            flash("Please upload the excel file！", "failed")
         return redirect(url_for('index'))
 
 
@@ -73,7 +79,34 @@ def logout():
 def index():
     if not current_user.is_authenticated:
         return redirect(url_for('login'))
-    return show()
+    if request.method == "POST":
+        validate = data_validate(request.form)
+        if validate:
+            x_info, max_min = get_data_from_page(request.form)
+            if request.form["algorithm"] == '0':
+                status, x_info = linear_programming(x_info, max_min)
+                results = parse_result(status, x_info)
+            else:
+                results = run_genetic_algorithm(x_info, max_min)
+            if results['sum_cost'] != -1:
+                session['results'] = results
+                flash("Results have been gotten！", "success")
+            else:
+                flash("No results！", "failed")
+        else:
+            if session.get('results'):
+                session.pop('results')
+            flash("Please input the necessary data！", "failed")
+        data = request.form.to_dict()
+        data['a_names'] = session['data']['a_names']
+        data['x_names'] = session['data']['x_names']
+        return show(data)
+    else:
+        if 'data' in session and session['data'] is not None:
+            data = session['data']
+        else:
+            data = {}
+        return show(data)
 
 
 @app.route('/clear', methods=['GET'])
