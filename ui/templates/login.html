@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Login Sample</title>
+    <title>Login</title>
+    <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/login.css') }}">
 </head>
 <body>
     <h1>Login</h1>
@@ -10,9 +11,11 @@
         <div>{{ messages[0] }}</div>
     {% endwith %}
     <form action="{{ url_for('login') }}" method="POST">
-        <input type="text" name="userid" id="userid" placeholder="UserId"></input>
-        <input type="password" name="password" id="password" placeholder="Password"></input>
-        <input type="submit" name="login" value="Login"></input>
+        <label for="uname"><b>Username</b></label>
+        <input type="text" name="userid" id="userid" placeholder="Enter user Id">
+        <label for="psw"><b>Password</b></label>
+        <input type="password" name="password" id="password" placeholder="Enter password">
+        <input type="submit" name="login" value="Login">
     </form>
 </body>
 </html>

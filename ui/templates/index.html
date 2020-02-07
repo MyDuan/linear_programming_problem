@@ -15,17 +15,25 @@
           {% endif %}
         {% endwith %}
     </div>
-    <h1>Linear Programming Problem</h1>
-    <div class="logout">
-        <a href="{{url_for('logout')}}">Logout</a>
+    <div class="head_bar" >
+        <h1>Linear Programming Problem</h1>
+        <div class="logout">
+            <a href="{{url_for('logout')}}">Logout</a>
+        </div>
+        <div class="clear">
+            <a href="{{url_for('clear')}}">Clear data in table</a>
+        </div>
     </div>
-    <div class="clear">
-        <a href="{{url_for('clear')}}">Clear data in table</a>
+    <div class="problem">
+        <img src="../static/lp_problem.png">
     </div>
-    <div class = "csv">
+    <div class = "file-upload-form">
         <form method="post" action="{{ url_for('upload_csv') }}" enctype="multipart/form-data">
-            <input type="file" id="upload_csv" name="upload_csv">
-            <input type="submit" value="upload csv">
+            <label class="file-upload">
+                <input type="file" id="upload_csv" name="upload_csv" accept=".xlsx">
+                <input type="submit" value="Upload edited .xlsx file">
+                <input type="button" value="Download sample .xlsx file">
+            </label>
         </form>
     </div>
     <div>
@@ -45,7 +53,7 @@
                     <tr class="active">
                         {% if data %}
                             <th>X</th>
-                            <th>Unit</th>
+                            <th>C</th>
                             {% for item in data %}
                                 {% if ('_name' in item) and ('_name_' not in item) and ('names' not in item) %}
                                     <th>{{data[item]}}</th>
@@ -60,11 +68,11 @@
                     {% for item in data %}
                         {% if ('x_name_' in item) %}
                             <tr>
-                                <td class="y"><div><p>{{data[item]}}</p></div></td>
+                                <td class="a"><div><p>{{data[item]}}</p></div></td>
                                 <input type="hidden" value="{{data[item]}}" name="{{item}}">
-                                <td class="y"><div><input type="text" value="{{data[item.split('_')[-1]+'_cost']}}" name="{{item.split('_')[-1]+'_cost'}}"></div></td>
+                                <td class="a"><div><input type="text" value="{{data[item.split('_')[-1]+'_cost']}}" name="{{item.split('_')[-1]+'_cost'}}"></div></td>
                                 {% for name in data['a_names'] %}
-                                    <td class="y"><div><input type="text" value="{{data[item.split('_')[-1]+loop.index|string]}}" name="{{item.split('_')[-1]+loop.index|string}}"></div></td>
+                                    <td class="a"><div><input type="text" value="{{data[item.split('_')[-1]+loop.index|string]}}" name="{{item.split('_')[-1]+loop.index|string}}"></div></td>
                                 {% endfor %}
                             </tr>
                         {% endif %}
