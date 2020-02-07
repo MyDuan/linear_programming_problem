@@ -51,17 +51,19 @@ form input[type="submit"] {
     width: 210px;
 }
 
-input[type="button"] {
+.file-upload-form a {
+	display: inline-block;
 	border: none;
     cursor: pointer;
     background-color: #333;
 	color: #f2f2f2;
     font-weight: 300;
-    width: 240px;
+    width: 270px;
     height: 30px;
     border-radius: 2px;
     font-size: 20px;
     text-align: center;
+  	text-decoration: none;
 }
 
 li {

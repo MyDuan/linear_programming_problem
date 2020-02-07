@@ -2,7 +2,7 @@
 import os
 from dotenv import load_dotenv
 from os.path import join, dirname
-from flask import Flask, request, redirect, url_for, session, flash
+from flask import Flask, request, redirect, url_for, session, flash, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
 from werkzeug import secure_filename
 from models import *
@@ -20,6 +20,7 @@ login_manager.login_message = 'Please login.'
 login_manager.init_app(app)
 
 UPLOAD_FOLDER = './uploads'
+XLSX_MIMETYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 
@@ -36,6 +37,14 @@ def upload_csv():
         else:
             flash("Please upload the excel file！", "failed")
         return redirect(url_for('index'))
+
+
+@app.route('/download_sample', methods=['GET'])
+def download_sample():
+    filename = "sample.xlsx"
+    uploads = os.path.join(app.root_path, '../uploads')
+    return send_from_directory(directory=uploads, filename=filename,
+                               as_attachment=True, attachment_filename=filename, mimetype = XLSX_MIMETYPE)
 
 
 @login_manager.user_loader

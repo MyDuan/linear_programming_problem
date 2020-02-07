@@ -32,7 +32,7 @@
             <label class="file-upload">
                 <input type="file" id="upload_csv" name="upload_csv" accept=".xlsx">
                 <input type="submit" value="Upload edited .xlsx file">
-                <input type="button" value="Download sample .xlsx file">
+                <a href="{{url_for('download_sample')}}">Download sample .xlsx file</a>
             </label>
         </form>
     </div>
