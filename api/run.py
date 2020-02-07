@@ -107,8 +107,11 @@ def index():
                 session.pop('results')
             flash("Please input the necessary data！", "failed")
         data = request.form.to_dict()
-        data['a_names'] = session['data']['a_names']
-        data['x_names'] = session['data']['x_names']
+        if len(data.keys()) == 1:
+            data = {}
+        else:
+            data['a_names'] = session['data']['a_names']
+            data['x_names'] = session['data']['x_names']
         return show(data)
     else:
         if 'data' in session and session['data'] is not None:
