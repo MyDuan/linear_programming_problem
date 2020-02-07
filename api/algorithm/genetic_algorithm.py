@@ -66,7 +66,7 @@ def select(ga_group, elite_length, a, upper, lower):
         for i in range(len(upper)):
             sum = 0.0
             for j in range(len(genome_list)):
-                sum += genome_list[j] * a[j][i] / 100.0
+                sum += genome_list[j] * a[j][i]
             if sum > upper[j] or sum < lower[j]:
                 ga.condition_ok = False
                 break

@@ -13,9 +13,9 @@ def linear_programming(x_info, max_min):
                           for x_name, x_value in x_info.items()), 'Objective'
     # conditions
     for b_name, b_range in max_min.items():
-        problem += sum(x_value['quantity'] * x_value[b_name] / 100.0
+        problem += sum(x_value['quantity'] * x_value[b_name]
                        for x_value in x_info.values()) >= b_range['min']
-        problem += sum(x_value['quantity'] * x_value[b_name] / 100.0
+        problem += sum(x_value['quantity'] * x_value[b_name]
                        for x_value in x_info.values()) <= b_range['max']
     status = {}
 
