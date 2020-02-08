@@ -44,8 +44,8 @@
     <div class = "file-upload-form">
         <form method="post" id="file-upload-form" action="{{ url_for('upload_csv') }}" enctype="multipart/form-data">
             <label class="file-upload">
-                <a><input type="file" id="upload_csv" name="upload_csv" accept=".xlsx">Upload edited .xlsx file</a>
                 <a href="{{url_for('download_sample')}}">Download sample .xlsx file</a>
+                <a><input type="file" id="upload_csv" name="upload_csv" accept=".xlsx">Upload edited .xlsx file</a>
             </label>
         </form>
     </div>
