@@ -47,8 +47,8 @@ form input[type="submit"] {
     text-align: center;
 }
 
-.file-upload-form input[type="submit"] {
-    width: 210px;
+.file-upload-form input[type="file"] {
+	display: none;
 }
 
 .file-upload-form a {

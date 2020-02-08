@@ -2,6 +2,8 @@
 <html>
 <head>
     <link rel=stylesheet type=text/css href="{{ url_for('static', filename='css/index.css') }}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='js/index.js')}}"></script>
 </head>
 <body>
     <div class="message">
@@ -40,10 +42,9 @@
         {% endif %}
     </div>
     <div class = "file-upload-form">
-        <form method="post" action="{{ url_for('upload_csv') }}" enctype="multipart/form-data">
+        <form method="post" id="file-upload-form" action="{{ url_for('upload_csv') }}" enctype="multipart/form-data">
             <label class="file-upload">
-                <input type="file" id="upload_csv" name="upload_csv" accept=".xlsx">
-                <input type="submit" value="Upload edited .xlsx file">
+                <a><input type="file" id="upload_csv" name="upload_csv" accept=".xlsx">Upload edited .xlsx file</a>
                 <a href="{{url_for('download_sample')}}">Download sample .xlsx file</a>
             </label>
         </form>
