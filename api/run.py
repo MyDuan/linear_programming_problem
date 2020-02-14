@@ -4,7 +4,7 @@ from dotenv import load_dotenv
 from os.path import join, dirname
 from flask import Flask, request, redirect, url_for, session, flash, send_from_directory
 from flask_login import LoginManager, login_user, logout_user, current_user, login_required
-from werkzeug import secure_filename
+from werkzeug.utils import secure_filename
 from models import *
 from application.index import *
 from algorithm import *
