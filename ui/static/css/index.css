@@ -122,8 +122,8 @@ th {
 .results{
     margin:auto;
 	text-align: center;
-	height: 240px;
-	width: 200px;
+	height: auto;
+	width: auto;
 	background-color: #CCCCFF;
 }
 

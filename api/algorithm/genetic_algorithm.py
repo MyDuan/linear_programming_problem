@@ -172,8 +172,8 @@ def run_genetic_algorithm(x_info, max_min):
     results = {}
     i = 0
     for x_name, _ in x_info.items():
-        results[x_name] = best_unit[i]
+        results[x_name] = round(best_unit[i], 6)
         i += 1
-    results['sum_cost'] = float(cost)
+    results['sum_cost'] = round(float(cost), 6)
     return results
 

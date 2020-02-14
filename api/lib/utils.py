@@ -42,11 +42,11 @@ def parse_result(status, x_info):
     sum_cost = 0.0
     results = {}
     for x_name, x_value in x_info.items():
-        results[x_name] = x_value['quantity'].value()
+        results[x_name] = round(x_value['quantity'].value(), 6)
         sum_cost += x_value['quantity'].value() * x_value['cost']
         i += 1
     if status['status'] != -1:
-        results['sum_cost'] = sum_cost
+        results['sum_cost'] = round(sum_cost, 6)
         return results
     else:
         results['sum_cost'] = -1
