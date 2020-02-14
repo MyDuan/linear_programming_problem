@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
+import hashlib
+import socket
 from dotenv import load_dotenv
 from os.path import join, dirname
 from flask import Flask, request, redirect, url_for, session, flash, send_from_directory
@@ -31,8 +33,11 @@ def upload_csv():
         if send_data:
             filename = secure_filename(send_data.filename)
             if filename:
-                send_data.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                data = get_data_from_file('uploads/' + filename)
+                filename_tmp = hashlib.md5((filename + socket.gethostbyname(socket.gethostname())).encode('utf-8')).hexdigest() + '.xlsx'
+                temp_file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename_tmp)
+                send_data.save(temp_file_path)
+                data = get_data_from_file(temp_file_path)
+                os.remove(temp_file_path)
                 session['data'] = data
         else:
             flash("Please upload the excel file！", "failed")
