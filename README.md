@@ -11,11 +11,12 @@
 ### How to use:
 - Login: user_id=admin, pw=12345
 - Download sample file: Click [Download sample .xlsx file] button
-![](./doc/login_download.gif)
 - Edit the file.
-![](./doc/edit.gif)
 - Upload edited sample file: Click [Upload edited .xlsx file] button
 - Select an algorithm
 - Calculate
-![](./doc/upload_cal.gif)
 
+### Show
+![login and download sample file](./doc/login_download.gif)
+![edit file](./doc/edit.gif)
+![ppload edited sample file and calculate](./doc/upload_cal.gif)
