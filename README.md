@@ -3,7 +3,7 @@
 ### install the lib
 - Run `pip install -r requirements.txt`
 ### run app in local
-- Run `python api/run.py
+- Run `python api/run.py`
 ### open the browser and access the url
 - url: `http://localhost:3000/`
 ### Url: http://35.194.45.252/
